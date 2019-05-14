@@ -12,7 +12,7 @@ end
 
 % Get all the paths and file names.
 fname=[path,name];
-filelist = dir([path,name(1:25),'*.tif']); % this step broken by alignment
+filelist = dir([path,name(1:31),'*.tif']); % this step broken by alignment
 filelist = filelist( cellfun(@length, {filelist.name}) == length(name))
 
 
