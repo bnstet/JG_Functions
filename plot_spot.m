@@ -1,9 +1,13 @@
-function plot_spot(spots,whichSpot)
+function plot_spot(spots,whichSpot, color)
 % plot_spot Plot specific targeted patch for stimulation. 
 
 if nargin<1 || isempty(spots)
     disp('spots not provided')
     return
+end
+
+if nargin < 3
+    color = 'y';
 end
 
 xcoordsAll = spots.xcoordsAll;
@@ -13,8 +17,8 @@ sizesAll = spots.sizesAll;
     convert=whichSpot;
     rectangle('Position',[xcoordsAll(convert)-sizesAll(convert)/2,...
         ycoordsAll(convert)-sizesAll(convert)/2,sizesAll(convert),...
-        sizesAll(convert)],'Curvature',[1,1],'EdgeColor','y');
+        sizesAll(convert)],'Curvature',[1,1],'EdgeColor',color);
     text(xcoordsAll(convert)+sizesAll(convert)/2,...
         ycoordsAll(convert)+sizesAll(convert)/2,num2str(convert),...
-        'FontSize',8,'Color',[1 1 0]);
+        'FontSize',8,'Color',color);
 end
