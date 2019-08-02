@@ -12,7 +12,7 @@ end
 
 % Get all the paths and file names.
 fname=[path,name];
-filelist = dir([path,name(1:31),'*.tif']); % this step broken by alignment
+filelist = dir(fullfile(path,[name(1:31),'*.tif'])); % this step broken by alignment
 %filelist = filelist( cellfun(@length, {filelist.name}) == length(name))
 
 
@@ -22,7 +22,7 @@ num_images = zeros(size(filelist,1),1);
 
 % Go through tiffs and figure out number of figures
 for idx = 1:length(pathlist)
-    pathlist{idx} = [path,filelist(idx).name];
+    pathlist{idx} = fullfile(path,filelist(idx).name);
     info = imfinfo(pathlist{idx}); %slow step. scales with number of images
     num_images(idx) = numel(info);
 end
