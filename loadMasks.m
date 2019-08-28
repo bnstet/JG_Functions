@@ -1,4 +1,4 @@
-function [mask_array,Spotidx] = loadMasks(path)
+function [mask_array,spotidx] = loadMasks(path)
 %[mask_array,Spotidx] = loadMasks(path)
 %   loadMasks() imports .bmp binary masks by file name and outputs a 
 %   logical tensor and linear index cell array. 
@@ -7,19 +7,22 @@ function [mask_array,Spotidx] = loadMasks(path)
 %   
 %   JG 2018
 
-if nargin == 1
-    fpathPat = path;
-else
-    fpathPat=uigetdir('','Please choose the mask directory');
-end
+fpathPat = path;
+
 
 mask_list = dir(fullfile(fpathPat,'*.bmp'));
-mask_array = NaN(512,512,length(mask_list));
-Spotidx = cell(length(mask_list),1);
+spotidx = cell(length(mask_list),1);
+width = 0; height=0;
 for idx = 1:length(mask_list)
     temp = imread(fullfile(fpathPat,mask_list(idx).name));
     temp = logical(temp./max(max(temp)));
+    if width ==0
+        [height, width] = size(temp);
+        mask_array = NaN(height,width,length(mask_list));
+    end
     mask_array(:,:,idx) = temp;
-    Spotidx{idx} = find(temp); % *Note* retained Spotidx for legacy use
+    spotidx{idx} = find(temp); % *Note* retained Spotidx for legacy use
 end
 mask_array = logical(mask_array);
+
+end

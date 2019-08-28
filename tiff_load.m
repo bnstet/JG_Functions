@@ -12,7 +12,7 @@ if nargin < 3
     redchannel = 0;
 end
 
-fname=[path,name];
+fname=fullfile(path,name);
 info = imfinfo(fname);
 num_images = numel(info);
 num_green_images=num_images/(redchannel+1);
