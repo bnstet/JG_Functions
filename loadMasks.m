@@ -7,7 +7,7 @@ function [mask_array,spotidx] = loadMasks(path)
 %   
 %   JG 2018
 
-fpathPat = path;
+fpathPat = char(path);
 
 
 mask_list = dir(fullfile(fpathPat,'*.bmp'));
