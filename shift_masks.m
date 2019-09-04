@@ -1,7 +1,8 @@
 function [] = shift_masks(sourcef, targetf, sourceMaskDir, outMaskDir)
 
 %% Load source template, target templates, and source masks
-
+disp(fprintf("Registering mask source reference %s to mask target reference %s", sourcef, targetf));
+disp(fprintf("Source mask dir %s ; output mask dir %s",sourceMaskDir, outMaskDir));
 
 mfiles = dir(fullfile(sourceMaskDir, '*.bmp'));
 nMasks = length(mfiles);
