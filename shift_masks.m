@@ -1,5 +1,7 @@
 function [] = shift_masks(sourcef, targetf, sourceMaskDir, outMaskDir)
 
+
+
 %% Load source template, target templates, and source masks
 disp(fprintf("Registering mask source reference %s to mask target reference %s", sourcef, targetf));
 disp(fprintf("Source mask dir %s ; output mask dir %s",sourceMaskDir, outMaskDir));
@@ -22,6 +24,20 @@ for i=1:nMasks
 end
 
 mmax = max(max(srcMasks)); % src mask maxima
+
+%% set up parpool
+
+% create a local cluster object
+pc = parcluster('local')
+
+% explicitly set the JobStorageLocation to the temp directory that was created in your sbatch script
+pc.JobStorageLocation = getenv('SLURM_DIR')
+
+% start the matlabpool with maximum available workers
+% control how many workers by setting ntasks in your sbatch script
+parpool(pc, str2num(getenv('SLURM_CPUS_ON_NODE')))
+
+
 %% get shifts
 
 
