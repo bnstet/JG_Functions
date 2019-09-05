@@ -41,8 +41,8 @@ fullWindowPostSize=30; % 0 will be the first frame post stim
 
 %% loop over files, calculate stats, concatenate stats tables, and fill in file info
 
-    
- 
+% store stim-centered fluorescence traces in a Map keyed on recid
+Fcent_list = containers.Map('KeyType',class(fileinfotab.recid(1)), 'ValueType','any');
 
 for loopInd=1:nfiles
     trace_file = trace_file_list(loopInd);
@@ -58,7 +58,8 @@ for loopInd=1:nfiles
     % get oneCellStim parameter
     trial_stat_tables;
 
-
+    Fcent_list(recid) = Fcentered;
+    
     fileinfotab.onecellstim(loopInd) = oneCellStim;
     fileinfotab.ncellstim(loopInd) = size(unique(patterninfotab.cell),1);
     fileinfotab.ntrials(loopInd) = ntrialsorig;
@@ -80,8 +81,9 @@ for loopInd=1:nfiles
         trialinfotabfull = vertcat(trialinfotabfull, trialinfotab);
     end
     
-    % update startTrialIdx for next recording
-    startTrialIdx = startTrialIdx + size(trialinfotab,1);
+    % update startTrialIdx for next recording NOTE: giving up on this since
+    % we can just join on trial and recind together
+    %startTrialIdx = startTrialIdx + size(trialinfotab,1);
 end
 
 pattab = patterninfotabfull;
@@ -92,4 +94,4 @@ filetab = fileinfotab;
 % save mask info for spatial reconstruction
 maskinds = expfile.spotidx;
 
-save(save_file, 'pattab', 'stattab', 'trialtab', 'filetab', 'preCalcPeriod', 'postCalcPeriod', 'Omitpost', 'Omitpre', 'fullWindowPreSize', 'fullWindowPostSize','maskinds');
+save(save_file, 'Fcent_list','prestiminds', 'poststiminds','pattab', 'stattab', 'trialtab', 'filetab', 'preCalcPeriod', 'postCalcPeriod', 'Omitpost', 'Omitpre', 'fullWindowPreSize', 'fullWindowPostSize','maskinds');

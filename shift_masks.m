@@ -30,12 +30,14 @@ mmax = max(max(srcMasks)); % src mask maxima
 % create a local cluster object
 pc = parcluster('local')
 
-% explicitly set the JobStorageLocation to the temp directory that was created in your sbatch script
-pc.JobStorageLocation = getenv('SLURM_DIR')
+% cluster job handling
+if numel(getenv('SLURM_DIR')) > 0
+    % explicitly set the JobStorageLocation to the temp directory that was created in your sbatch script
+    pc.JobStorageLocation = getenv('SLURM_DIR')
 
-% start the matlabpool with maximum available workers
-% control how many workers by setting ntasks in your sbatch script
-parpool(pc, str2num(getenv('SLURM_CPUS_ON_NODE')))
+    % start the matlabpool with maximum available workers
+    % control how many workers by setting ntasks in your sbatch script
+    parpool(pc, str2num(getenv('SLURM_CPUS_ON_NODE')))
 
 
 %% get shifts
