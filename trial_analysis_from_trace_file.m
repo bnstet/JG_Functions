@@ -1,6 +1,8 @@
 clear all
 %% get directory info
 
+
+
 trace_dir = 'C:\Users\bnste\Downloads\JG1150\JG1150_trace_files';
 trace_file_list = dir(fullfile(trace_dir,'*.mat'));
 nfiles = size(trace_file_list,1);
@@ -44,7 +46,10 @@ fullWindowPostSize=30; % 0 will be the first frame post stim
 % store stim-centered fluorescence traces in a Map keyed on recid
 Fcent_list = containers.Map('KeyType',class(fileinfotab.recid(1)), 'ValueType','any');
 
+
+
 for loopInd=1:nfiles
+    disp(sprintf("Extracting stats tables from trace file %d / %d",loopInd ,nfiles));
     trace_file = trace_file_list(loopInd);
     expfile = load(fullfile(trace_file.folder, trace_file.name));
     fileinfotab.filename(loopInd) = trace_file.name;
@@ -92,6 +97,6 @@ trialtab = trialinfotabfull;
 filetab = fileinfotab;
 
 % save mask info for spatial reconstruction
-maskinds = expfile.spotidx;
+maskinds = expfile.maskinds;
 
 save(save_file, 'Fcent_list','prestiminds', 'poststiminds','pattab', 'stattab', 'trialtab', 'filetab', 'preCalcPeriod', 'postCalcPeriod', 'Omitpost', 'Omitpre', 'fullWindowPreSize', 'fullWindowPostSize','maskinds');
