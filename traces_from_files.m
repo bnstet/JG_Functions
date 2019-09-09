@@ -29,6 +29,7 @@ init_frames = [0 final_frames(1:end-1)] + 1;
 
 %% load cell masks  and stim sites
 [masks, spotidx] = loadMasks(mask_dir);
+maskinds = spotidx;
 
 % debug line to speed up extraction
 %masks = masks(:,:,1:2);
@@ -162,7 +163,7 @@ if get_save_name
     save_name = fullfile(save_dir, save_name);
 end
 
-arg_list = ["mov_list", "num_images", "mask_dir", "spotidx","init_frames", "final_frames", "F","frameidx", "M", "m", "Spotidx", "SpotMat", "pattern_path",  "spot_num"];
+arg_list = ["mov_list", "num_images", "mask_dir", "maskinds","init_frames", "final_frames", "F","frameidx", "M", "m", "Spotidx", "SpotMat", "pattern_path",  "spot_num"];
 if multistim
     arg_list = cat(2,arg_list ,"patternFrames", "patternTrials");
 end

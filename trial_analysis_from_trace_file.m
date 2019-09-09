@@ -92,6 +92,6 @@ trialtab = trialinfotabfull;
 filetab = fileinfotab;
 
 % save mask info for spatial reconstruction
-maskinds = expfile.spotidx;
+maskinds = expfile.maskinds;
 
 save(save_file, 'Fcent_list','prestiminds', 'poststiminds','pattab', 'stattab', 'trialtab', 'filetab', 'preCalcPeriod', 'postCalcPeriod', 'Omitpost', 'Omitpre', 'fullWindowPreSize', 'fullWindowPostSize','maskinds');
